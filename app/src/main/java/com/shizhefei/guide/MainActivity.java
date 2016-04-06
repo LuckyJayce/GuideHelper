@@ -50,12 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
             guideHelper.addPage(tipData1, tipData2, tipData3);
 
-            // TipData tipData4 = new TipData(R.drawable.ic_launcher,
-            // textView2).setLocation(Gravity.CENTER_HORIZONTAL |
-            // Gravity.TOP, 0,
-            // -DisplayUtils.dipToPix(getApplicationContext(), 20));
-            // guideHelper.addPage(tipData3, tipData4);
-
             guideHelper.show();
 
         }

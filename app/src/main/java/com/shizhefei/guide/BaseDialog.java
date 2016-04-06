@@ -10,7 +10,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-public class BaseDialog extends Dialog implements DialogInterface.OnDismissListener {
+class BaseDialog extends Dialog implements DialogInterface.OnDismissListener {
 	private Activity activity;
 
 	public BaseDialog(Activity context) {
