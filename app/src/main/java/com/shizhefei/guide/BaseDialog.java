@@ -20,6 +20,8 @@ public class BaseDialog extends Dialog implements DialogInterface.OnDismissListe
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public BaseDialog(Activity context, int style) {
 		super(context, style);
+
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
 			localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
