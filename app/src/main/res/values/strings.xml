@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Guide_Demo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="citys">
+        <item>厦门</item>
+        <item>深圳</item>
+        <item>上海</item>
+        <item>广州</item>
+        <item>北京</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,1906 @@
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision )
++++ .idea/compiler.xml	(revision )
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <resourceExtensions />
++    <wildcardResourcePatterns>
++      <entry name="!?*.java" />
++      <entry name="!?*.form" />
++      <entry name="!?*.class" />
++      <entry name="!?*.groovy" />
++      <entry name="!?*.scala" />
++      <entry name="!?*.flex" />
++      <entry name="!?*.kt" />
++      <entry name="!?*.clj" />
++      <entry name="!?*.aj" />
++    </wildcardResourcePatterns>
++    <annotationProcessing>
++      <profile default="true" name="Default" enabled="false">
++        <processorPath useClasspath="true" />
++      </profile>
++    </annotationProcessing>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/values-w820dp/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values-w820dp/dimens.xml	(revision )
++++ app/src/main/res/values-w820dp/dimens.xml	(revision )
+@@ -0,0 +1,6 @@
++<resources>
++    <!-- Example customization of dimensions originally defined in res/values/dimens.xml
++         (such as screen margins) for screens with more than 820dp of available width. This
++         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
++    <dimen name="activity_horizontal_margin">64dp</dimen>
++</resources>
+Index: .idea/libraries/appcompat_v7_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/appcompat_v7_23_2_1.xml	(revision )
++++ .idea/libraries/appcompat_v7_23_2_1.xml	(revision )
+@@ -0,0 +1,15 @@
++<component name="libraryTable">
++  <library name="appcompat-v7-23.2.1">
++    <ANNOTATIONS>
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/annotations.zip!/" />
++    </ANNOTATIONS>
++    <CLASSES>
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar!/" />
++      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/appcompat-v7/23.2.1/appcompat-v7-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>GBK
+===================================================================
+--- gradle.properties	(revision )
++++ gradle.properties	(revision )
+@@ -0,0 +1,18 @@
++# Project-wide Gradle settings.
++
++# IDE (e.g. Android Studio) users:
++# Gradle settings configured through the IDE *will override*
++# any settings specified in this file.
++
++# For more details on how to configure your build environment visit
++# http://www.gradle.org/docs/current/userguide/build_environment.html
++
++# Specifies the JVM arguments used for the daemon process.
++# The setting is particularly useful for tweaking memory settings.
++# Default value: -Xmx10248m -XX:MaxPermSize=256m
++# org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
++
++# When configured, Gradle will run in incubating parallel mode.
++# This option should only be used with decoupled projects. More details, visit
++# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
++# org.gradle.parallel=true
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/encodings.xml	(revision )
++++ .idea/encodings.xml	(revision )
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="PROJECT" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/shizhefei/guide/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/shizhefei/guide/MainActivity.java	(revision )
++++ app/src/main/java/com/shizhefei/guide/MainActivity.java	(revision )
+@@ -0,0 +1,63 @@
++package com.shizhefei.guide;
++
++import android.os.Bundle;
++import android.support.v7.app.AppCompatActivity;
++import android.view.Gravity;
++import android.view.View;
++
++import com.shizhefei.guide.GuideHelper.TipData;
++import com.shizhefei.util.DisplayUtils;
++
++
++public class MainActivity extends AppCompatActivity {
++
++
++    private View iconView;
++    private View citysView;
++    private View infoLayout;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_main);
++
++        iconView = findViewById(R.id.icon);
++        citysView = findViewById(R.id.citys);
++        infoLayout = findViewById(R.id.infoLayout);
++
++        View button = findViewById(R.id.button1);
++
++        button.setOnClickListener(onClickListener);
++    }
++
++    private View.OnClickListener onClickListener = new View.OnClickListener() {
++
++        @Override
++        public void onClick(View v) {
++
++            GuideHelper guideHelper = new GuideHelper(MainActivity.this);
++
++            TipData tipData1 = new TipData(R.drawable.tip1, Gravity.RIGHT | Gravity.BOTTOM, iconView);
++            tipData1.setLocation(0, -DisplayUtils.dipToPix(v.getContext(), 50));
++            guideHelper.addPage(tipData1);
++            //
++            TipData tipData2 = new TipData(R.drawable.tip2, citysView);
++            guideHelper.addPage(tipData2);
++            //
++
++            TipData tipData3 = new TipData(R.drawable.tip3, infoLayout);
++            guideHelper.addPage(tipData3);
++
++            guideHelper.addPage(tipData1, tipData2, tipData3);
++
++            // TipData tipData4 = new TipData(R.drawable.ic_launcher,
++            // textView2).setLocation(Gravity.CENTER_HORIZONTAL |
++            // Gravity.TOP, 0,
++            // -DisplayUtils.dipToPix(getApplicationContext(), 20));
++            // guideHelper.addPage(tipData3, tipData4);
++
++            guideHelper.show();
++
++        }
++    };
++}
+Index: .idea/.name
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.name	(revision )
++++ .idea/.name	(revision )
+@@ -0,0 +1,1 @@
++GuideHelper
+\ No newline at end of file
+Index: app/src/androidTest/java/com/shizhefei/guide/guidehelper/ApplicationTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/androidTest/java/com/shizhefei/guide/guidehelper/ApplicationTest.java	(revision )
++++ app/src/androidTest/java/com/shizhefei/guide/guidehelper/ApplicationTest.java	(revision )
+@@ -0,0 +1,13 @@
++package com.shizhefei.guide.guidehelper;
++
++import android.app.Application;
++import android.test.ApplicationTestCase;
++
++/**
++ * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
++ */
++public class ApplicationTest extends ApplicationTestCase<Application> {
++    public ApplicationTest() {
++        super(Application.class);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/menu/menu_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/menu_main.xml	(revision )
++++ app/src/main/res/menu/menu_main.xml	(revision )
+@@ -0,0 +1,10 @@
++<menu xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    tools:context="com.shizhefei.guide.guidehelper.MainActivity">
++    <item
++        android:id="@+id/action_settings"
++        android:orderInCategory="100"
++        android:title="@string/action_settings"
++        app:showAsAction="never" />
++</menu>
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/styles.xml	(revision )
++++ app/src/main/res/values/styles.xml	(revision )
+@@ -0,0 +1,33 @@
++<resources>
++
++    <!-- Base application theme. -->
++    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
++        <!-- Customize your theme here. -->
++        <item name="colorPrimary">@color/colorPrimary</item>
++        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
++        <item name="colorAccent">@color/colorAccent</item>
++    </style>
++
++    <style name="AppTheme.NoActionBar">
++        <item name="windowActionBar">false</item>
++        <item name="windowNoTitle">true</item>
++    </style>
++
++    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
++
++    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
++
++    <style name="base_dialog" parent="@android:style/Theme.Dialog">
++        <item name="android:windowIsTranslucent">true</item>
++        <item name="android:windowNoTitle">true</item>
++        <item name="android:background">@android:color/transparent</item>
++        <item name="android:windowBackground">@android:color/transparent</item>
++        <item name="android:backgroundDimEnabled">true</item>
++        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
++        <item name="android:windowFrame">@null</item>
++
++        <item name="android:windowIsFloating">true</item>
++        <item name="android:windowContentOverlay">@null</item>
++        <item name="android:colorBackgroundCacheHint">@null</item>
++    </style>
++</resources>
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision )
++++ app/src/main/res/values/colors.xml	(revision )
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <color name="colorPrimary">#448AFF</color>
++    <color name="colorPrimaryDark">#303F9F</color>
++    <color name="colorAccent">#FF4081</color>
++</resources>
+Index: app/proguard-rules.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/proguard-rules.pro	(revision )
++++ app/proguard-rules.pro	(revision )
+@@ -0,0 +1,17 @@
++# Add project specific ProGuard rules here.
++# By default, the flags in this file are appended to flags specified
++# in D:\Android-Eclipse\Android-SDK/tools/proguard/proguard-android.txt
++# You can edit the include path and order by changing the proguardFiles
++# directive in build.gradle.
++#
++# For more details, see
++#   http://developer.android.com/guide/developing/tools/proguard.html
++
++# Add any project specific keep options here:
++
++# If your project uses WebView with JS, uncomment the following
++# and specify the fully qualified class name to the JavaScript interface
++# class:
++#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
++#   public *;
++#}
+Index: app/src/main/java/com/shizhefei/util/DisplayUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/shizhefei/util/DisplayUtils.java	(revision )
++++ app/src/main/java/com/shizhefei/util/DisplayUtils.java	(revision )
+@@ -0,0 +1,109 @@
++package com.shizhefei.util;
++
++import java.util.Locale;
++
++import android.annotation.TargetApi;
++import android.content.ClipData;
++import android.content.Context;
++import android.content.res.Configuration;
++import android.os.Build;
++import android.provider.Settings.Secure;
++import android.util.DisplayMetrics;
++import android.util.TypedValue;
++
++public class DisplayUtils {
++
++	public static boolean isTablet(Context context) {
++		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
++	}
++
++	public static boolean isTvbox(Context context) {
++		return getDeviceType(context) == 3;
++	}
++
++	private static int deviceType = -1;
++
++	public static int getDeviceType(Context context) {
++		if (deviceType == -1) {
++			if (context.getPackageManager().hasSystemFeature("android.hardware.telephony")) {
++				// Check if android.hardware.touchscreen feature is available.
++				deviceType = 1;
++			} else if (context.getPackageManager().hasSystemFeature("android.hardware.touchscreen")) {
++				deviceType = 2;
++			} else {
++				deviceType = 3;
++			}
++		}
++
++		return deviceType;
++	}
++
++	/**
++	 * 根据dip值转化成px值
++	 * 
++	 * @param context
++	 * @param dip
++	 * @return
++	 */
++	public static int dipToPix(Context context, int dip) {
++		int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
++		return size;
++	}
++
++	public static float spToPx(Context context, float sp) {
++		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
++	}
++
++	public static int getDimenValue(Context context, int dimenId) {
++		return (int) context.getResources().getDimension(dimenId);
++	}
++
++	public static DisplayMetrics getDisplayMetrics(Context context) {
++		// DisplayMetrics dm = new DisplayMetrics();
++		// activity.getResources().getDisplayMetrics();
++		// activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
++		return context.getResources().getDisplayMetrics();
++	}
++
++	/**
++	 * 判断设备是否是模拟器
++	 * 
++	 * @return
++	 */
++	public static boolean isEmulator() {
++		return "sdk".equals(Build.PRODUCT) || "google_sdk".equals(Build.PRODUCT) || "generic".equals(Build.BRAND.toLowerCase(Locale.getDefault()));
++	}
++
++	/**
++	 * 得到设备id
++	 * 
++	 * @param context
++	 * @return
++	 */
++	public static String getAndroidId(Context context) {
++		String android_id = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
++		return android_id;
++	}
++
++	public static int getStatusBarHeight(Context context) {
++		int result = 0;
++		int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
++		if (resourceId > 0) {
++			result = context.getResources().getDimensionPixelSize(resourceId);
++		}
++		return result;
++	}
++
++	@SuppressWarnings("deprecation")
++	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
++	public static void copyToClipboard(Context context, String text) {
++		// if()
++		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
++			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
++			clipboard.setText(text);
++		} else {
++			android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
++			clipboard.setPrimaryClip(ClipData.newPlainText(null, text));
++		}
++	}
++}
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision )
++++ app/src/main/AndroidManifest.xml	(revision )
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.shizhefei.guide">
++
++    <application
++        android:allowBackup="true"
++        android:icon="@mipmap/ic_launcher"
++        android:label="@string/app_name"
++        android:supportsRtl="true"
++        android:theme="@style/AppTheme">
++        <activity
++            android:name=".MainActivity"
++            android:label="@string/app_name"
++            android:theme="@style/AppTheme.NoActionBar">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++
++</manifest>
+Index: app/src/main/res/values-v21/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values-v21/styles.xml	(revision )
++++ app/src/main/res/values-v21/styles.xml	(revision )
+@@ -0,0 +1,9 @@
++<resources>>
++
++    <style name="AppTheme.NoActionBar">
++        <item name="windowActionBar">false</item>
++        <item name="windowNoTitle">true</item>
++        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
++        <item name="android:statusBarColor">@android:color/transparent</item>
++    </style>
++</resources>
+Index: app/src/main/java/com/shizhefei/guide/BaseDialog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/shizhefei/guide/BaseDialog.java	(revision )
++++ app/src/main/java/com/shizhefei/guide/BaseDialog.java	(revision )
+@@ -0,0 +1,63 @@
++package com.shizhefei.guide;
++
++
++import android.annotation.TargetApi;
++import android.app.Activity;
++import android.app.Dialog;
++import android.content.Context;
++import android.content.DialogInterface;
++import android.os.Build;
++import android.util.DisplayMetrics;
++import android.view.WindowManager;
++
++public class BaseDialog extends Dialog implements DialogInterface.OnDismissListener {
++	private Activity activity;
++
++	public BaseDialog(Activity context) {
++		this(context, R.style.base_dialog);
++	}
++
++	@TargetApi(Build.VERSION_CODES.KITKAT)
++	public BaseDialog(Activity context, int style) {
++		super(context, style);
++		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
++			WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
++			localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
++		}
++		this.activity = context;
++		super.setOnDismissListener(this);
++	}
++
++	protected Context getApplicationContext() {
++		return getContext().getApplicationContext();
++	}
++
++	@Override
++	public void setOnDismissListener(OnDismissListener listener) {
++		onDismissListener = listener;
++	}
++
++	private OnDismissListener onDismissListener;
++
++	public Activity getActivity() {
++		return activity;
++	}
++
++	@Override
++	public void onDismiss(DialogInterface dialog) {
++		if (onDismissListener != null)
++			onDismissListener.onDismiss(dialog);
++	}
++
++	public void showAtBottom() {
++		show();
++		DisplayMetrics metric = new DisplayMetrics();
++		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
++		int height = metric.heightPixels;
++		WindowManager.LayoutParams params = getWindow().getAttributes();
++		params.width = WindowManager.LayoutParams.MATCH_PARENT;
++		params.x = 0;
++		params.y = height - params.height;
++		getWindow().setAttributes(params);
++	}
++}
+Index: app/src/main/res/layout/content_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/content_main.xml	(revision )
++++ app/src/main/res/layout/content_main.xml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:paddingBottom="@dimen/activity_vertical_margin"
++    android:paddingLeft="@dimen/activity_horizontal_margin"
++    android:paddingRight="@dimen/activity_horizontal_margin"
++    android:paddingTop="@dimen/activity_vertical_margin"
++    app:layout_behavior="@string/appbar_scrolling_view_behavior"
++    tools:context="com.shizhefei.guide.guidehelper.MainActivity"
++    tools:showIn="@layout/activity_main">
++
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="Hello World!" />
++</RelativeLayout>
+Index: .idea/libraries/animated_vector_drawable_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/animated_vector_drawable_23_2_1.xml	(revision )
++++ .idea/libraries/animated_vector_drawable_23_2_1.xml	(revision )
+@@ -0,0 +1,12 @@
++<component name="libraryTable">
++  <library name="animated-vector-drawable-23.2.1">
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/res" />
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/animated-vector-drawable/23.2.1/animated-vector-drawable-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision )
++++ .idea/gradle.xml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="distributionType" value="LOCAL" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="gradleHome" value="D:\Program Files\Android\Android Studio\gradle\gradle-2.8" />
++        <option name="gradleJvm" value="1.7" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>GBK
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision )
++++ gradle/wrapper/gradle-wrapper.properties	(revision )
+@@ -0,0 +1,6 @@
++#Wed Oct 21 11:34:03 PDT 2015
++distributionBase=GRADLE_USER_HOME
++distributionPath=wrapper/dists
++zipStoreBase=GRADLE_USER_HOME
++zipStorePath=wrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-2.8-all.zip
+Index: gradlew.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradlew.bat	(revision )
++++ gradlew.bat	(revision )
+@@ -0,0 +1,90 @@
++@if "%DEBUG%" == "" @echo off
++@rem ##########################################################################
++@rem
++@rem  Gradle startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables with windows NT shell
++if "%OS%"=="Windows_NT" setlocal
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS=
++
++set DIRNAME=%~dp0
++if "%DIRNAME%" == "" set DIRNAME=.
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if "%ERRORLEVEL%" == "0" goto init
++
++echo.
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto init
++
++echo.
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:init
++@rem Get command-line arguments, handling Windowz variants
++
++if not "%OS%" == "Windows_NT" goto win9xME_args
++if "%@eval[2+2]" == "4" goto 4NT_args
++
++:win9xME_args
++@rem Slurp the command line arguments.
++set CMD_LINE_ARGS=
++set _SKIP=2
++
++:win9xME_args_slurp
++if "x%~1" == "x" goto execute
++
++set CMD_LINE_ARGS=%*
++goto execute
++
++:4NT_args
++@rem Get arguments from the 4NT Shell from JP Software
++set CMD_LINE_ARGS=%$
++
++:execute
++@rem Setup the command line
++
++set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
++
++@rem Execute Gradle
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%
++
++:end
++@rem End local scope for the variables with windows NT shell
++if "%ERRORLEVEL%"=="0" goto mainEnd
++
++:fail
++rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
++rem the _cmd.exe /c_ return code!
++if  not "" == "%GRADLE_EXIT_CONSOLE%" exit 1
++exit /b 1
++
++:mainEnd
++if "%OS%"=="Windows_NT" endlocal
++
++:omega
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(revision )
++++ app/src/main/res/layout/activity_main.xml	(revision )
+@@ -0,0 +1,75 @@
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#fff"
++    android:orientation="vertical"
++    tools:context="com.example.guide_demo.MainActivity" >
++
++    <FrameLayout
++        android:layout_width="match_parent"
++        android:layout_height="48dp"
++        android:background="#448AFF"
++        android:paddingLeft="8dp"
++        android:paddingRight="8dp" >
++
++        <ImageView
++            android:id="@+id/icon"
++            android:layout_width="42dp"
++            android:layout_height="42dp"
++            android:layout_gravity="center_vertical|left"
++            android:gravity="center"
++            android:src="@drawable/user_icon"
++            android:text="@string/hello_world" />
++
++        <Spinner
++            android:id="@+id/citys"
++            android:layout_width="120dp"
++            android:layout_height="42dp"
++            android:layout_gravity="center_vertical|right"
++            android:entries="@array/citys" />
++    </FrameLayout>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        android:layout_weight="1"
++        android:gravity="center" >
++
++        <LinearLayout
++            android:id="@+id/infoLayout"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center"
++            android:background="#ccc"
++            android:padding="16dp" >
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content" >
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="用户名:  " />
++
++                <EditText
++                    android:id="@+id/editText1"
++                    android:layout_width="150dp"
++                    android:layout_height="wrap_content" >
++
++                    <requestFocus />
++                </EditText>
++            </LinearLayout>
++        </LinearLayout>
++    </LinearLayout>
++
++    <Button
++        android:id="@+id/button1"
++        android:layout_width="150dp"
++        android:layout_height="50dp"
++        android:gravity="center"
++        android:layout_gravity="right"
++        android:text="显示新手引导" />
++
++</LinearLayout>
+\ No newline at end of file
+Index: .idea/libraries/support_annotations_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/support_annotations_23_2_1.xml	(revision )
++++ .idea/libraries/support_annotations_23_2_1.xml	(revision )
+@@ -0,0 +1,11 @@
++<component name="libraryTable">
++  <library name="support-annotations-23.2.1">
++    <CLASSES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
+Index: gradlew
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- gradlew	(revision )
++++ gradlew	(revision )
+@@ -0,0 +1,160 @@
++#!/usr/bin/env bash
++
++##############################################################################
++##
++##  Gradle start up script for UN*X
++##
++##############################################################################
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS=""
++
++APP_NAME="Gradle"
++APP_BASE_NAME=`basename "$0"`
++
++# Use the maximum available, or set MAX_FD != -1 to use that value.
++MAX_FD="maximum"
++
++warn ( ) {
++    echo "$*"
++}
++
++die ( ) {
++    echo
++    echo "$*"
++    echo
++    exit 1
++}
++
++# OS specific support (must be 'true' or 'false').
++cygwin=false
++msys=false
++darwin=false
++case "`uname`" in
++  CYGWIN* )
++    cygwin=true
++    ;;
++  Darwin* )
++    darwin=true
++    ;;
++  MINGW* )
++    msys=true
++    ;;
++esac
++
++# Attempt to set APP_HOME
++# Resolve links: $0 may be a link
++PRG="$0"
++# Need this for relative symlinks.
++while [ -h "$PRG" ] ; do
++    ls=`ls -ld "$PRG"`
++    link=`expr "$ls" : '.*-> \(.*\)$'`
++    if expr "$link" : '/.*' > /dev/null; then
++        PRG="$link"
++    else
++        PRG=`dirname "$PRG"`"/$link"
++    fi
++done
++SAVED="`pwd`"
++cd "`dirname \"$PRG\"`/" >/dev/null
++APP_HOME="`pwd -P`"
++cd "$SAVED" >/dev/null
++
++CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
++
++# Determine the Java command to use to start the JVM.
++if [ -n "$JAVA_HOME" ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++        # IBM's JDK on AIX uses strange locations for the executables
++        JAVACMD="$JAVA_HOME/jre/sh/java"
++    else
++        JAVACMD="$JAVA_HOME/bin/java"
++    fi
++    if [ ! -x "$JAVACMD" ] ; then
++        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++else
++    JAVACMD="java"
++    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++fi
++
++# Increase the maximum file descriptors if we can.
++if [ "$cygwin" = "false" -a "$darwin" = "false" ] ; then
++    MAX_FD_LIMIT=`ulimit -H -n`
++    if [ $? -eq 0 ] ; then
++        if [ "$MAX_FD" = "maximum" -o "$MAX_FD" = "max" ] ; then
++            MAX_FD="$MAX_FD_LIMIT"
++        fi
++        ulimit -n $MAX_FD
++        if [ $? -ne 0 ] ; then
++            warn "Could not set maximum file descriptor limit: $MAX_FD"
++        fi
++    else
++        warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
++    fi
++fi
++
++# For Darwin, add options to specify how the application appears in the dock
++if $darwin; then
++    GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
++fi
++
++# For Cygwin, switch paths to Windows format before running java
++if $cygwin ; then
++    APP_HOME=`cygpath --path --mixed "$APP_HOME"`
++    CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
++    JAVACMD=`cygpath --unix "$JAVACMD"`
++
++    # We build the pattern for arguments to be converted via cygpath
++    ROOTDIRSRAW=`find -L / -maxdepth 1 -mindepth 1 -type d 2>/dev/null`
++    SEP=""
++    for dir in $ROOTDIRSRAW ; do
++        ROOTDIRS="$ROOTDIRS$SEP$dir"
++        SEP="|"
++    done
++    OURCYGPATTERN="(^($ROOTDIRS))"
++    # Add a user-defined pattern to the cygpath arguments
++    if [ "$GRADLE_CYGPATTERN" != "" ] ; then
++        OURCYGPATTERN="$OURCYGPATTERN|($GRADLE_CYGPATTERN)"
++    fi
++    # Now convert the arguments - kludge to limit ourselves to /bin/sh
++    i=0
++    for arg in "$@" ; do
++        CHECK=`echo "$arg"|egrep -c "$OURCYGPATTERN" -`
++        CHECK2=`echo "$arg"|egrep -c "^-"`                                 ### Determine if an option
++
++        if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ### Added a condition
++            eval `echo args$i`=`cygpath --path --ignore --mixed "$arg"`
++        else
++            eval `echo args$i`="\"$arg\""
++        fi
++        i=$((i+1))
++    done
++    case $i in
++        (0) set -- ;;
++        (1) set -- "$args0" ;;
++        (2) set -- "$args0" "$args1" ;;
++        (3) set -- "$args0" "$args1" "$args2" ;;
++        (4) set -- "$args0" "$args1" "$args2" "$args3" ;;
++        (5) set -- "$args0" "$args1" "$args2" "$args3" "$args4" ;;
++        (6) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" ;;
++        (7) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
++        (8) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
++        (9) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
++    esac
++fi
++
++# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
++function splitJvmOpts() {
++    JVM_OPTS=("$@")
++}
++eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
++JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
++
++exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+Index: app/src/test/java/com/shizhefei/guide/guidehelper/ExampleUnitTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/test/java/com/shizhefei/guide/guidehelper/ExampleUnitTest.java	(revision )
++++ app/src/test/java/com/shizhefei/guide/guidehelper/ExampleUnitTest.java	(revision )
+@@ -0,0 +1,15 @@
++package com.shizhefei.guide.guidehelper;
++
++import org.junit.Test;
++
++import static org.junit.Assert.*;
++
++/**
++ * To work on unit tests, switch the Test Artifact in the Build Variants view.
++ */
++public class ExampleUnitTest {
++    @Test
++    public void addition_isCorrect() throws Exception {
++        assertEquals(4, 2 + 2);
++    }
++}
+\ No newline at end of file
+Index: .idea/copyright/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/copyright/profiles_settings.xml	(revision )
++++ .idea/copyright/profiles_settings.xml	(revision )
+@@ -0,0 +1,3 @@
++<component name="CopyrightManager">
++  <settings default="" />
++</component>
+\ No newline at end of file
+Index: .idea/libraries/support_vector_drawable_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/support_vector_drawable_23_2_1.xml	(revision )
++++ .idea/libraries/support_vector_drawable_23_2_1.xml	(revision )
+@@ -0,0 +1,12 @@
++<component name="libraryTable">
++  <library name="support-vector-drawable-23.2.1">
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/res" />
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/support-vector-drawable/23.2.1/support-vector-drawable-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/libraries/design_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/design_23_2_1.xml	(revision )
++++ .idea/libraries/design_23_2_1.xml	(revision )
+@@ -0,0 +1,15 @@
++<component name="libraryTable">
++  <library name="design-23.2.1">
++    <ANNOTATIONS>
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/annotations.zip!/" />
++    </ANNOTATIONS>
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/res" />
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/design/23.2.1/design-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision )
++++ .idea/misc.xml	(revision )
+@@ -0,0 +1,62 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="EntryPointsManager">
++    <entry_points version="2.0" />
++  </component>
++  <component name="NullableNotNullManager">
++    <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
++    <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
++    <option name="myNullables">
++      <value>
++        <list size="4">
++          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
++          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
++          <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.Nullable" />
++          <item index="3" class="java.lang.String" itemvalue="android.support.annotation.Nullable" />
++        </list>
++      </value>
++    </option>
++    <option name="myNotNulls">
++      <value>
++        <list size="4">
++          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
++          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
++          <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
++          <item index="3" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
++        </list>
++      </value>
++    </option>
++  </component>
++  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
++    <OptionsSetting value="true" id="Add" />
++    <OptionsSetting value="true" id="Remove" />
++    <OptionsSetting value="true" id="Checkout" />
++    <OptionsSetting value="true" id="Update" />
++    <OptionsSetting value="true" id="Status" />
++    <OptionsSetting value="true" id="Edit" />
++    <ConfirmationsSetting value="0" id="Add" />
++    <ConfirmationsSetting value="0" id="Remove" />
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/build/classes" />
++  </component>
++  <component name="ProjectType">
++    <option name="id" value="Android" />
++  </component>
++  <component name="masterDetails">
++    <states>
++      <state key="ProjectJDKs.UI">
++        <settings>
++          <last-edited>1.7</last-edited>
++          <splitter-proportions>
++            <option name="proportions">
++              <list>
++                <option value="0.2" />
++              </list>
++            </option>
++          </splitter-proportions>
++        </settings>
++      </state>
++    </states>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/runConfigurations.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/runConfigurations.xml	(revision )
++++ .idea/runConfigurations.xml	(revision )
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RunConfigurationProducerService">
++    <option name="ignoredProducers">
++      <set>
++        <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
++        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
++        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
++      </set>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/.gitignore	(revision )
++++ app/.gitignore	(revision )
+@@ -0,0 +1,1 @@
++/build
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision )
++++ build.gradle	(revision )
+@@ -0,0 +1,23 @@
++// Top-level build file where you can add configuration options common to all sub-projects/modules.
++
++buildscript {
++    repositories {
++        jcenter()
++    }
++    dependencies {
++        classpath 'com.android.tools.build:gradle:1.5.0'
++
++        // NOTE: Do not place your application dependencies here; they belong
++        // in the individual module build.gradle files
++    }
++}
++
++allprojects {
++    repositories {
++        jcenter()
++    }
++}
++
++task clean(type: Delete) {
++    delete rootProject.buildDir
++}
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision )
++++ app/build.gradle	(revision )
+@@ -0,0 +1,27 @@
++apply plugin: 'com.android.application'
++
++android {
++    compileSdkVersion 23
++    buildToolsVersion "23.0.2"
++
++    defaultConfig {
++        applicationId "com.shizhefei.guide"
++        minSdkVersion 9
++        targetSdkVersion 23
++        versionCode 1
++        versionName "1.0"
++    }
++    buildTypes {
++        release {
++            minifyEnabled false
++            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
++        }
++    }
++}
++
++dependencies {
++    compile fileTree(dir: 'libs', include: ['*.jar'])
++    testCompile 'junit:junit:4.12'
++    compile 'com.android.support:appcompat-v7:23.2.1'
++    compile 'com.android.support:design:23.2.1'
++}
+Index: app/src/main/java/com/shizhefei/guide/GuideHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/shizhefei/guide/GuideHelper.java	(revision )
++++ app/src/main/java/com/shizhefei/guide/GuideHelper.java	(revision )
+@@ -0,0 +1,343 @@
++package com.shizhefei.guide;
++
++import java.util.LinkedList;
++
++import android.annotation.TargetApi;
++import android.app.Activity;
++import android.content.DialogInterface;
++import android.content.DialogInterface.OnDismissListener;
++import android.content.res.Resources;
++import android.graphics.Bitmap;
++import android.graphics.Bitmap.Config;
++import android.graphics.BitmapFactory;
++import android.graphics.Canvas;
++import android.graphics.Rect;
++import android.graphics.drawable.Drawable;
++import android.os.Build;
++import android.os.Handler;
++import android.os.Looper;
++import android.util.DisplayMetrics;
++import android.view.Gravity;
++import android.view.View;
++import android.view.View.OnClickListener;
++import android.view.ViewGroup.LayoutParams;
++import android.view.WindowManager;
++import android.widget.FrameLayout;
++import android.widget.ImageView;
++import android.widget.ImageView.ScaleType;
++
++import com.shizhefei.util.DisplayUtils;
++
++public class GuideHelper {
++
++	private Activity activity;
++
++	private LinkedList<TipData[]> pages = new LinkedList<TipData[]>();
++
++	private BaseDialog baseDialog;
++
++	public GuideHelper(Activity activity) {
++		super();
++		this.activity = activity;
++	}
++
++	public GuideHelper addPage(TipData... tipDatas) {
++		pages.add(tipDatas);
++		return this;
++	}
++
++	public OnDismissListener onDismissListener;
++
++	private FrameLayout layout;
++
++	public OnDismissListener getOnDismissListener() {
++		return onDismissListener;
++	}
++
++	public void setOnDismissListener(OnDismissListener onDismissListener) {
++		this.onDismissListener = onDismissListener;
++	}
++
++	@TargetApi(Build.VERSION_CODES.KITKAT)
++	public GuideHelper show() {
++		dismiss();
++		handler.removeCallbacksAndMessages(null);
++		layout = new FrameLayout(activity);
++		baseDialog = new BaseDialog(activity);
++
++		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
++			WindowManager.LayoutParams localLayoutParams = baseDialog.getWindow().getAttributes();
++			localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
++		}
++
++		baseDialog.setContentView(layout);
++		baseDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
++		baseDialog.setOnDismissListener(new OnDismissListener() {
++
++			@Override
++			public void onDismiss(DialogInterface dialog) {
++				handler.removeCallbacksAndMessages(null);
++			}
++		});
++		baseDialog.show();
++		if (onDismissListener != null) {
++			baseDialog.setOnDismissListener(onDismissListener);
++		}
++		pages.get(0)[0].views[0].post(new Runnable() {
++
++			@Override
++			public void run() {
++				send();
++			}
++		});
++		return this;
++	}
++
++	private static final int MIN = 2000;
++	private static final int MAX = 6000;
++
++	private Handler handler = new Handler(Looper.getMainLooper()) {
++		public void handleMessage(android.os.Message msg) {
++			if (!pages.isEmpty()) {
++				send();
++			} else {
++				dismiss();
++			}
++		};
++	};
++
++	private void send() {
++		TipData[] tipDatas = pages.poll();
++		int d = tipDatas.length * 1500;
++		if (d < MIN) {
++			d = 2000;
++		} else if (d > MAX) {
++			d = MAX;
++		}
++		showIm(layout, tipDatas);
++		handler.sendEmptyMessageDelayed(1, d);
++	}
++
++	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
++	private void showIm(final FrameLayout layout, TipData... tipDatas) {
++		Resources resources = layout.getResources();
++		layout.removeAllViews();
++		for (TipData data : tipDatas) {
++			View[] views = data.views;
++			int[] location = new int[2];
++			Rect rect = null;
++			for (View view : views) {
++				if (view.getVisibility() != View.VISIBLE) {
++					continue;
++				}
++
++				view.getLocationOnScreen(location);
++				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
++					location[1] -= DisplayUtils.getStatusBarHeight(activity);
++				}
++				int vWidth = view.getMeasuredWidth();
++				int vHeight = view.getMeasuredHeight();
++
++				if (vWidth <= 0 || vHeight <= 0) {
++					LayoutParams layoutParams = view.getLayoutParams();
++					view.measure(layoutParams.width, layoutParams.height);
++					vWidth = view.getMeasuredWidth();
++					vHeight = view.getMeasuredHeight();
++				}
++
++				if (vWidth <= 0 || vHeight <= 0) {
++					continue;
++				}
++
++				if (data.needDrawView) {
++					view.setDrawingCacheEnabled(true);
++					view.buildDrawingCache();
++					Bitmap bitmap = view.getDrawingCache();
++					if (bitmap != null) {
++						bitmap = Bitmap.createBitmap(bitmap);
++					} else {
++						bitmap = Bitmap.createBitmap(vWidth, vHeight, Config.ARGB_8888);
++						Canvas canvas = new Canvas(bitmap);
++						view.draw(canvas);
++					}
++					view.setDrawingCacheEnabled(false);
++					view.destroyDrawingCache();
++
++					ImageView imageView = new ImageView(activity);
++					imageView.setScaleType(ScaleType.CENTER_INSIDE);
++					imageView.setImageBitmap(bitmap);
++
++					if (data.viewBg != null) {
++						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
++							imageView.setBackground(data.viewBg);
++						} else {
++							imageView.setBackgroundDrawable(data.viewBg);
++						}
++					}
++					// imageView.setBackgroundColor(Color.GRAY);
++
++					if (data.onClickListener != null)
++						imageView.setOnClickListener(data.onClickListener);
++					FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
++					params.leftMargin = location[0];
++					params.topMargin = location[1];
++					params.gravity = Gravity.LEFT | Gravity.TOP;
++					layout.addView(imageView, params);
++				}
++
++				if (rect == null) {
++					rect = new Rect(location[0], location[1], location[0] + vWidth, location[1] + vHeight);
++				} else {
++					if (rect.left > location[0]) {
++						rect.left = location[0];
++					}
++					if (rect.right < location[0] + vWidth) {
++						rect.right = location[0] + vWidth;
++					}
++					if (rect.top > location[1]) {
++						rect.top = location[1];
++					}
++					if (rect.bottom < location[1] + vHeight) {
++						rect.bottom = location[1] + vHeight;
++					}
++				}
++			}
++			if (rect == null) {
++				continue;
++			}
++
++			Bitmap bitmap = BitmapFactory.decodeResource(resources, data.resourceId);
++
++			ImageView tip = new ImageView(activity);
++			// tip.setScaleType(ScaleType.CENTER_INSIDE);
++			tip.setImageBitmap(bitmap);
++
++			int imageH = bitmap.getHeight();
++			int imageW = bitmap.getWidth();
++
++			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
++			int x = 0;
++			switch (data.gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
++			case Gravity.CENTER_HORIZONTAL:
++				x = (rect.left + rect.right) / 2 - imageW / 2;
++				break;
++			case Gravity.RIGHT:
++				x = rect.right;
++				break;
++			case Gravity.LEFT:
++			default:
++				x = rect.left - imageW;
++			}
++			int y = 0;
++			switch (data.gravity & Gravity.VERTICAL_GRAVITY_MASK) {
++			case Gravity.CENTER_VERTICAL:
++				y = (rect.top + rect.bottom) / 2 - imageH / 2;
++				break;
++			case Gravity.BOTTOM:
++				y = rect.bottom;
++				break;
++			case Gravity.TOP:
++			default:
++				y = rect.top - imageH;
++			}
++
++			DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(activity);
++
++			x += data.offsetX;
++			y += data.offsetY;
++
++			if (x < 0) {
++				x = 0;
++			} else if (x + imageW > displayMetrics.widthPixels) {
++				x = displayMetrics.widthPixels - imageW;
++			}
++			if (y < 0) {
++				y = 0;
++			} else if (y + imageH > displayMetrics.heightPixels) {
++				y = displayMetrics.heightPixels - imageH;
++			}
++
++			params.leftMargin = x;
++			params.topMargin = y;
++			params.gravity = Gravity.LEFT | Gravity.TOP;
++			layout.addView(tip, params);
++		}
++
++		layout.setOnClickListener(new OnClickListener() {
++
++			@Override
++			public void onClick(View v) {
++				if (pages.isEmpty()) {
++					dismiss();
++				} else {
++					handler.removeCallbacksAndMessages(null);
++					handler.sendEmptyMessage(1);
++				}
++			}
++		});
++	}
++
++	public void dismiss() {
++		if (baseDialog != null)
++			baseDialog.dismiss();
++		baseDialog = null;
++	}
++
++	public static class TipData {
++		View[] views;
++		int resourceId;
++		int gravity = DEFAULT_GRAVITY;
++		boolean needDrawView = true;
++		private static final int DEFAULT_GRAVITY = Gravity.BOTTOM | Gravity.CENTER;
++
++		OnClickListener onClickListener;
++		private int offsetX;
++		private int offsetY;
++		private Drawable viewBg;
++
++		public TipData(int resourceId, View... views) {
++			this(resourceId, DEFAULT_GRAVITY, views);
++		}
++
++		public TipData(int resourceId, int gravity, View... views) {
++			super();
++			this.views = views;
++			this.gravity = gravity;
++			this.resourceId = resourceId;
++		}
++
++		public TipData setLocation(int gravity) {
++			this.gravity = gravity;
++			return this;
++		}
++
++		public TipData setLocation(int gravity, int offsetX, int offsetY) {
++			this.gravity = gravity;
++			this.offsetX = offsetX;
++			this.offsetY = offsetY;
++			return this;
++		}
++
++		public TipData setLocation(int offsetX, int offsetY) {
++			this.offsetX = offsetX;
++			this.offsetY = offsetY;
++			return this;
++		}
++
++		public TipData setViewBg(Drawable viewBg) {
++			this.viewBg = viewBg;
++			return this;
++		}
++
++		public TipData setNeedDrawView(boolean needDrawView) {
++			this.needDrawView = needDrawView;
++			return this;
++		}
++
++		public TipData setOnClickListener(OnClickListener onClickListener) {
++			this.onClickListener = onClickListener;
++			return this;
++		}
++	}
++
++}
+Index: app/app.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/app.iml	(revision )
++++ app/app.iml	(revision )
+@@ -0,0 +1,98 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="GuideHelper" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="android-gradle" name="Android-Gradle">
++      <configuration>
++        <option name="GRADLE_PROJECT_PATH" value=":app" />
++      </configuration>
++    </facet>
++    <facet type="android" name="Android">
++      <configuration>
++        <option name="SELECTED_BUILD_VARIANT" value="debug" />
++        <option name="SELECTED_TEST_ARTIFACT" value="_android_test_" />
++        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
++        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
++        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleDebugAndroidTest" />
++        <option name="COMPILE_JAVA_TEST_TASK_NAME" value="compileDebugAndroidTestSources" />
++        <afterSyncTasks>
++          <task>generateDebugAndroidTestSources</task>
++          <task>generateDebugSources</task>
++        </afterSyncTasks>
++        <option name="ALLOW_USER_CONFIGURATION" value="false" />
++        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
++        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
++        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res" />
++        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
++      </configuration>
++    </facet>
++  </component>
++  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
++    <output url="file://$MODULE_DIR$/build/intermediates/classes/debug" />
++    <output-test url="file://$MODULE_DIR$/build/intermediates/classes/androidTest/debug" />
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/debug" isTestSource="false" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/debug" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/debug" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/debug" isTestSource="true" generated="true" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/debug" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/debug" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
++      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
++      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
++      <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
++      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
++    </content>
++    <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++    <orderEntry type="library" exported="" name="animated-vector-drawable-23.2.1" level="project" />
++    <orderEntry type="library" exported="" name="support-v4-23.2.1" level="project" />
++    <orderEntry type="library" exported="" name="recyclerview-v7-23.2.1" level="project" />
++    <orderEntry type="library" exported="" name="support-annotations-23.2.1" level="project" />
++    <orderEntry type="library" exported="" name="support-vector-drawable-23.2.1" level="project" />
++    <orderEntry type="library" exported="" name="design-23.2.1" level="project" />
++    <orderEntry type="library" exported="" name="appcompat-v7-23.2.1" level="project" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/libraries/support_v4_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/support_v4_23_2_1.xml	(revision )
++++ .idea/libraries/support_v4_23_2_1.xml	(revision )
+@@ -0,0 +1,16 @@
++<component name="libraryTable">
++  <library name="support-v4-23.2.1">
++    <ANNOTATIONS>
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/annotations.zip!/" />
++    </ANNOTATIONS>
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/res" />
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/libs/internal_impl-23.2.1.jar!/" />
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/classes.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/support-v4/23.2.1/support-v4-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision )
++++ app/src/main/res/values/strings.xml	(revision )
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++
++    <string name="app_name">Guide_Demo</string>
++    <string name="hello_world">Hello world!</string>
++    <string name="action_settings">Settings</string>
++
++    <string-array name="citys">
++        <item>厦门</item>
++        <item>深圳</item>
++        <item>上海</item>
++        <item>广州</item>
++        <item>北京</item>
++    </string-array>
++
++</resources>
+Index: GuideHelper.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- GuideHelper.iml	(revision )
++++ GuideHelper.iml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module external.linked.project.id="GuideHelper" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="java-gradle" name="Java-Gradle">
++      <configuration>
++        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
++        <option name="BUILDABLE" value="false" />
++      </configuration>
++    </facet>
++  </component>
++  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision )
++++ .idea/vcs.xml	(revision )
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(revision )
++++ .idea/modules.xml	(revision )
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/GuideHelper.iml" filepath="$PROJECT_DIR$/GuideHelper.iml" />
++      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- settings.gradle	(revision )
++++ settings.gradle	(revision )
+@@ -0,0 +1,1 @@
++include ':app'
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/dimens.xml	(revision )
++++ app/src/main/res/values/dimens.xml	(revision )
+@@ -0,0 +1,6 @@
++<resources>
++    <!-- Default screen margins, per the Android Design guidelines. -->
++    <dimen name="activity_horizontal_margin">16dp</dimen>
++    <dimen name="activity_vertical_margin">16dp</dimen>
++    <dimen name="fab_margin">16dp</dimen>
++</resources>
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .gitignore	(revision )
++++ .gitignore	(revision )
+@@ -0,0 +1,26 @@
++# Built application files
++*.apk
++*.ap_
++ 
++# Files for the Dalvik VM
++*.dex
++ 
++# Java class files
++*.class
++ 
++# Generated files
++bin/
++gen/
++ 
++# Gradle files
++.gradle/
++build/
++ 
++# Local configuration file (sdk path, etc)
++local.properties
++ 
++# Proguard folder generated by Eclipse
++proguard/
++ 
++# Log Files
++*.log
+\ No newline at end of file
+Index: .idea/libraries/recyclerview_v7_23_2_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/recyclerview_v7_23_2_1.xml	(revision )
++++ .idea/libraries/recyclerview_v7_23_2_1.xml	(revision )
+@@ -0,0 +1,15 @@
++<component name="libraryTable">
++  <library name="recyclerview-v7-23.2.1">
++    <ANNOTATIONS>
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/annotations.zip!/" />
++    </ANNOTATIONS>
++    <CLASSES>
++      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars/classes.jar!/" />
++      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/res" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="jar://D:/Android-Eclipse/Android-SDK/extras/android/m2repository/com/android/support/recyclerview-v7/23.2.1/recyclerview-v7-23.2.1-sources.jar!/" />
++    </SOURCES>
++  </library>
++</component>
+\ No newline at end of file
