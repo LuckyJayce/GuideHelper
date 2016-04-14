@@ -22,6 +22,11 @@
 #效果如下：  
 ![image](https://github.com/LuckyJayce/GuideHelper/blob/master/raw/g.gif)  
 
+# 联系方式和问题建议
+
+* 微博:http://weibo.com/u/3181073384
+* QQ 群: 开源项目使用交流，问题解答: 549284336（开源盛世） 
+
 License
 =======
 
