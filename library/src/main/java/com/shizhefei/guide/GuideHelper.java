@@ -260,7 +260,7 @@ public class GuideHelper {
                     y = rect.top - imageH;
             }
 
-            DisplayMetrics displayMetrics =activity.getResources().getDisplayMetrics();
+            DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
 
             x += data.offsetX;
             y += data.offsetY;
