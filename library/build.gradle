@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.novoda.bintray-release'//添加
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -21,4 +21,44 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+}
+
+//打包生成jar包，执行gradle buildJar
+//dependsOn 可根据实际需要增加或更改
+task buildJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar) {
+
+    appendix = "demo"
+    baseName = "androidJar"
+    version = "1.0.0"
+    classifier = "release"
+    //后缀名
+    extension = "jar"
+    //最终的 Jar 包名，如果没设置，默认为 [baseName]-[appendix]-[version]-[classifier].[extension]
+    archiveName = "d.jar"
+
+    //需打包的资源所在的路径集
+    def srcClassDir = [project.buildDir.absolutePath + "/intermediates/classes/release"];
+    //初始化资源路径集
+    from srcClassDir
+
+    //过滤不需要的class
+    exclude "**/**/BuildConfig.class"
+    exclude "**/**/BuildConfig\$*.class"
+    exclude "**/R.class"
+    exclude "**/R\$*.class"
+//
+//    //指定打包的class
+//    include "com/test/**/*.class"
+}
+
+//上传到jcenter 执行
+//gradlew clean build bintrayUpload -PbintrayUser=用户名 -PbintrayKey=apiKey -PdryRun=false
+//添加
+publish {
+    userOrg = 'luckyjayce'//bintray.com用户名
+    groupId = 'com.shizhefei'//jcenter上的路径
+    artifactId = 'GuideHelper'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = '实现Android新手引导页'//描述，不重要
+    website = 'https://github.com/LuckyJayce/GuideHelper'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }
