@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
             guideHelper.addPage(tipData1, tipData2, tipData3);
 
-            guideHelper.show();
+            guideHelper.show(false);
+//            guideHelper.show(true);
 
         }
     };
