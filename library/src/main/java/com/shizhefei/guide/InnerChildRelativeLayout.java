@@ -3,6 +3,7 @@ package com.shizhefei.guide;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 /**
@@ -33,7 +34,7 @@ public class InnerChildRelativeLayout extends RelativeLayout {
                 int offsetX = 0;
                 int offsetY = 0;
                 if (child.getLeft() < 0) {
-                    offsetX = child.getLeft();
+                    offsetX = -child.getLeft();
                 } else if (child.getRight() > maxW) {
                     offsetX = maxW - child.getRight();
                 }
@@ -42,7 +43,20 @@ public class InnerChildRelativeLayout extends RelativeLayout {
                 } else if (child.getTop() > maxH) {
                     offsetY = maxH - child.getBottom();
                 }
-                child.layout(child.getLeft() + offsetX, child.getTop() + offsetY, child.getRight() + offsetX, child.getBottom() + offsetY);
+                int w;
+                int h;
+                ViewGroup.LayoutParams layoutParams = child.getLayoutParams();
+                if (layoutParams.width > 0) {
+                    w = layoutParams.width;
+                } else {
+                    w = child.getMeasuredWidth();
+                }
+                if (layoutParams.height > 0) {
+                    h = layoutParams.height;
+                } else {
+                    h = child.getMeasuredHeight();
+                }
+                child.layout(child.getLeft() + offsetX, child.getTop() + offsetY, child.getLeft() + w + offsetX, child.getTop() + h + offsetY);
             }
         }
     }

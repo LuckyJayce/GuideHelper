@@ -349,6 +349,7 @@ public class GuideHelper {
             int showViewHeight = 0;
             int showViewWidth = 0;
             View tipView;
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             if (data.tipView != null) {
                 tipView = data.tipView;
                 tipView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -359,10 +360,11 @@ public class GuideHelper {
                 showViewHeight = bitmap.getHeight();
                 showViewWidth = bitmap.getWidth();
                 ImageView tip = new ImageView(activity);
+                layoutParams.width = showViewWidth;
+                layoutParams.height = showViewHeight;
                 tip.setImageBitmap(bitmap);
                 tipView = tip;
             }
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             switch (data.gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
                 case Gravity.CENTER_HORIZONTAL:
                     layoutParams.rightMargin = rect.width() / 2 - showViewWidth / 2;
@@ -380,10 +382,11 @@ public class GuideHelper {
             int y = 0;
             switch (data.gravity & Gravity.VERTICAL_GRAVITY_MASK) {
                 case Gravity.CENTER_VERTICAL:
-                    layoutParams.rightMargin = rect.height() / 2 - showViewHeight / 2;
+                    layoutParams.topMargin = rect.height() / 2 - showViewHeight / 2;
                     layoutParams.addRule(RelativeLayout.ALIGN_TOP, imageViewId);
                     break;
                 case Gravity.TOP:
+                    layoutParams.bottomMargin =  rect.height();
                     layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, imageViewId);
                     break;
                 case Gravity.BOTTOM:
@@ -393,7 +396,7 @@ public class GuideHelper {
                     break;
             }
             layoutParams.leftMargin += data.offsetX;
-            layoutParams.leftMargin -= data.offsetX;
+            layoutParams.rightMargin -= data.offsetX;
             layoutParams.topMargin += data.offsetY;
             layoutParams.bottomMargin -= data.offsetY;
             layout.addView(tipView, layoutParams);
