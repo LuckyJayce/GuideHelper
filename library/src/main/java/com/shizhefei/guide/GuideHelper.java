@@ -51,6 +51,15 @@ public class GuideHelper {
 
     private Dialog baseDialog;
 
+    /**
+     * 在自动播放完成或是点击播放完成后是否消失，默认是消失
+     * @author Yale
+     * create at 2016/7/14 16:31
+     */
+    private boolean isAutoDismiss = true;
+
+
+
     public GuideHelper(Activity activity) {
         super();
         this.activity = activity;
@@ -77,7 +86,13 @@ public class GuideHelper {
         show(true);
         return this;
     }
+    public boolean isAutoDismiss() {
+        return isAutoDismiss;
+    }
 
+    public void setAutoDismiss(boolean autoDismiss) {
+        isAutoDismiss = autoDismiss;
+    }
     private boolean autoPlay;
 
     /**
@@ -120,15 +135,40 @@ public class GuideHelper {
         });
         //显示
         baseDialog.show();
-        //显示提示界面，这里用view去post，是为了保证view已经显示，才能获取到view的界面画在提示界面上
-        pages.get(0)[0].views[0].post(new Runnable() {
+        startSend();
+        return this;
+    }
 
+    /**
+     * 显示提示界面，这里用view去post，是为了保证view已经显示，才能获取到view的界面画在提示界面上
+     * 如果只有自定义view，那么就用handler post
+     * @author modify by yale
+     * create at 2016/7/14 16:12
+     */
+    private void startSend(){
+        View view = null;
+        for (TipData[] tps:pages) {
+            for (TipData tp:tps) {
+                if (tp.views!=null){
+                    view = tp.views[0];
+                    break;
+                }
+            }
+            if (view != null){
+                break;
+            }
+        }
+        Runnable r = new Runnable() {
             @Override
             public void run() {
                 send();
             }
-        });
-        return this;
+        };
+        if (view!=null){
+            view.post(r);
+        }else{
+            handler.post(r);
+        }
     }
 
     private static final int MIN = 2000;
@@ -138,7 +178,7 @@ public class GuideHelper {
         public void handleMessage(android.os.Message msg) {
             if (!pages.isEmpty()) {
                 send();
-            } else {
+            } else if (isAutoDismiss){
                 dismiss();
             }
         }
@@ -157,7 +197,25 @@ public class GuideHelper {
             handler.sendEmptyMessageDelayed(1, d);
         }
     }
+    /**
+     * 添加自定义view
+     * @author Yale
+     * create at 2016/7/14 16:19
+     */
+    private void addCustomView( FrameLayout layout,TipData data){
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
+        params.leftMargin = data.marginRect.left;
+        params.topMargin = data.marginRect.top;
+        params.rightMargin = data.marginRect.right;
+        params.bottomMargin = data.marginRect.bottom;
+        params.gravity =data.gravity;
+        if (data.onClickListener != null){
+            data.customView.setClickable(true);
+            data.customView.setOnClickListener(data.onClickListener);
+        }
+        layout.addView(data.customView, params);
+    }
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showIm(final FrameLayout layout, TipData... tipDatas) {
         Resources resources = layout.getResources();
@@ -168,6 +226,12 @@ public class GuideHelper {
         layout.getLocationOnScreen(layoutOffset);
         //循环提示的数据列表
         for (TipData data : tipDatas) {
+
+            //判断是自定义view,add by yale
+            if (data.customView!=null){
+                addCustomView(layout,data);
+                continue;
+            }
 
             //循环需要提示的view
             View[] views = data.views;
@@ -324,7 +388,7 @@ public class GuideHelper {
 
             @Override
             public void onClick(View v) {
-                if (pages.isEmpty()) {
+                if (pages.isEmpty()&&isAutoDismiss) {
                     dismiss();
                 } else {
                     handler.removeCallbacksAndMessages(null);
@@ -351,6 +415,32 @@ public class GuideHelper {
         private int offsetX;
         private int offsetY;
         private Drawable viewBg;
+
+
+        /**
+         * 自定义view
+         * @author Yale
+         * create at 2016/7/14 16:17
+         */
+        View customView;
+
+        /**
+         * 自定义view margin
+         * @author Yale
+         * create at 2016/7/14 16:17
+         */
+        Rect marginRect;
+
+        /**
+         * 自定义view 初始化
+         * @author Yale
+         * create at 2016/7/14 16:17
+         */
+        public TipData(int gravity,Rect marginRect,View customView){
+            this.gravity = gravity;
+            this.customView =customView;
+            this.marginRect = marginRect;
+        }
 
         public TipData(int resourceId, View... views) {
             this(resourceId, DEFAULT_GRAVITY, views);

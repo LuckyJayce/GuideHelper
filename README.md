@@ -5,7 +5,7 @@
   compile 'com.shizhefei:GuideHelper:1.0.1'  
 #代码如下：  
 
-            GuideHelper guideHelper = new GuideHelper(MainActivity.this);
+            final GuideHelper guideHelper = new GuideHelper(MainActivity.this);
 
             TipData tipData1 = new TipData(R.drawable.tip1, Gravity.RIGHT | Gravity.BOTTOM, iconView);
             tipData1.setLocation(0, -DisplayUtils.dipToPix(v.getContext(), 50));
@@ -20,10 +20,24 @@
 
             guideHelper.addPage(tipData1, tipData2, tipData3);
 
-            guideHelper.show();
+            //add custom view
+            LayoutInflater ll = LayoutInflater.from(MainActivity.this);
+            View testView = ll.inflate(R.layout.custom_view,null);
+            TipData tipDataCustom= new TipData(Gravity.CENTER,new Rect(),testView);
+            testView.findViewById(R.id.guide_close).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    guideHelper.dismiss();
+                }
+            });
+            guideHelper.setAutoDismiss(false);//一般不设置，默认是true
+            guideHelper.addPage(tipDataCustom);
+
+            guideHelper.show(false);
+//            guideHelper.show(true);
             
 #效果如下：  
-![image](https://github.com/LuckyJayce/GuideHelper/blob/master/raw/g.gif)  
+![image](https://github.com/LuckyJayce/GuideHelper/blob/master/raw/g1.gif)  
 
 # 联系方式和问题建议
 
