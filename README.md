@@ -2,7 +2,7 @@
 可以在提示也绘制实际的view，在view的上下左右位置添加提示信息的图片  
   
 **gradle导入**   
-  compile 'com.shizhefei:GuideHelper:1.0.2'  
+  compile 'com.shizhefei:GuideHelper:1.0.3'  
 #代码如下：  
 
             final GuideHelper guideHelper = new GuideHelper(MainActivity.this);
