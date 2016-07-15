@@ -31,15 +31,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.RelativeLayout;
 
 import java.util.LinkedList;
 
@@ -47,18 +47,9 @@ public class GuideHelper {
 
     private Activity activity;
 
-    private LinkedList<TipData[]> pages = new LinkedList<TipData[]>();
+    private LinkedList<TipPage> pages = new LinkedList<TipPage>();
 
     private Dialog baseDialog;
-
-    /**
-     * 在自动播放完成或是点击播放完成后是否消失，默认是消失
-     * @author Yale
-     * create at 2016/7/14 16:31
-     */
-    private boolean isAutoDismiss = true;
-
-
 
     public GuideHelper(Activity activity) {
         super();
@@ -66,13 +57,22 @@ public class GuideHelper {
     }
 
     public GuideHelper addPage(TipData... tipDatas) {
-        pages.add(tipDatas);
+        return addPage(true, tipDatas);
+    }
+
+    /**
+     * @param clickDoNext 点击提示界面是否进入显示下一个界面，或者dismiss
+     * @param tipDatas
+     * @return
+     */
+    public GuideHelper addPage(boolean clickDoNext, TipData... tipDatas) {
+        pages.add(new TipPage(clickDoNext, tipDatas));
         return this;
     }
 
     public OnDismissListener onDismissListener;
 
-    private FrameLayout layout;
+    private RelativeLayout layout;
 
     public OnDismissListener getOnDismissListener() {
         return onDismissListener;
@@ -86,17 +86,14 @@ public class GuideHelper {
         show(true);
         return this;
     }
-    public boolean isAutoDismiss() {
-        return isAutoDismiss;
-    }
 
-    public void setAutoDismiss(boolean autoDismiss) {
-        isAutoDismiss = autoDismiss;
-    }
     private boolean autoPlay;
 
+    public View inflate(int layoutId) {
+        return LayoutInflater.from(activity).inflate(layoutId, layout, false);
+    }
+
     /**
-     *
      * @param autoPlay 是否自动播放提示
      * @return
      */
@@ -108,7 +105,7 @@ public class GuideHelper {
         handler.removeCallbacksAndMessages(null);
 
         //创建dialog
-        layout = new FrameLayout(activity);
+        layout = new InnerChildRelativeLayout(activity);
         baseDialog = new Dialog(activity, android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge_NoActionBar);
         baseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x66000000));
 
@@ -142,19 +139,20 @@ public class GuideHelper {
     /**
      * 显示提示界面，这里用view去post，是为了保证view已经显示，才能获取到view的界面画在提示界面上
      * 如果只有自定义view，那么就用handler post
+     *
      * @author modify by yale
      * create at 2016/7/14 16:12
      */
-    private void startSend(){
+    private void startSend() {
         View view = null;
-        for (TipData[] tps:pages) {
-            for (TipData tp:tps) {
-                if (tp.views!=null){
-                    view = tp.views[0];
+        for (TipPage tipPage : pages) {
+            for (TipData tp : tipPage.tipDatas) {
+                if (tp.targetViews != null&&tp.targetViews.length>0) {
+                    view = tp.targetViews[0];
                     break;
                 }
             }
-            if (view != null){
+            if (view != null) {
                 break;
             }
         }
@@ -164,9 +162,9 @@ public class GuideHelper {
                 send();
             }
         };
-        if (view!=null){
+        if (view != null) {
             view.post(r);
-        }else{
+        } else {
             handler.post(r);
         }
     }
@@ -178,17 +176,19 @@ public class GuideHelper {
         public void handleMessage(android.os.Message msg) {
             if (!pages.isEmpty()) {
                 send();
-            } else if (isAutoDismiss){
+            } else if (currentPage == null || currentPage.clickDoNext) {
                 dismiss();
             }
         }
     };
 
+    private TipPage currentPage;
+
     private void send() {
-        TipData[] tipDatas = pages.poll();
-        showIm(layout, tipDatas);
+        currentPage = pages.poll();
+        showIm(layout, currentPage.tipDatas);
         if (autoPlay) {
-            int d = tipDatas.length * 1500;
+            int d = currentPage.tipDatas.length * 1500;
             if (d < MIN) {
                 d = 2000;
             } else if (d > MAX) {
@@ -197,44 +197,65 @@ public class GuideHelper {
             handler.sendEmptyMessageDelayed(1, d);
         }
     }
-    /**
-     * 添加自定义view
-     * @author Yale
-     * create at 2016/7/14 16:19
-     */
-    private void addCustomView( FrameLayout layout,TipData data){
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-        params.leftMargin = data.marginRect.left;
-        params.topMargin = data.marginRect.top;
-        params.rightMargin = data.marginRect.right;
-        params.bottomMargin = data.marginRect.bottom;
-        params.gravity =data.gravity;
-        if (data.onClickListener != null){
-            data.customView.setClickable(true);
-            data.customView.setOnClickListener(data.onClickListener);
-        }
-        layout.addView(data.customView, params);
-    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void showIm(final FrameLayout layout, TipData... tipDatas) {
+    private void showIm(final RelativeLayout layout, TipData... tipDatas) {
         Resources resources = layout.getResources();
         //移除掉之前所有的viwe
         layout.removeAllViews();
         //获取layout在屏幕上的位置
         int layoutOffset[] = new int[2];
         layout.getLocationOnScreen(layoutOffset);
+        int imageViewId = 89598;
         //循环提示的数据列表
         for (TipData data : tipDatas) {
-
-            //判断是自定义view,add by yale
-            if (data.customView!=null){
-                addCustomView(layout,data);
+            imageViewId++;
+            if (data.targetViews == null || data.targetViews.length == 0) {
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                switch (data.gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
+                    case Gravity.CENTER_HORIZONTAL:
+                        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                        break;
+                    case Gravity.RIGHT:
+                        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, imageViewId);
+                        break;
+                    case Gravity.LEFT:
+                    default:
+                        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, imageViewId);
+                        break;
+                }
+                int y = 0;
+                switch (data.gravity & Gravity.VERTICAL_GRAVITY_MASK) {
+                    case Gravity.CENTER_VERTICAL:
+                        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, imageViewId);
+                        break;
+                    case Gravity.TOP:
+                        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, imageViewId);
+                        break;
+                    case Gravity.BOTTOM:
+                    default:
+                        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, imageViewId);
+                        break;
+                }
+                View tipView;
+                if (data.tipView != null) {
+                    tipView = data.tipView;
+                } else {
+                    Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), data.tipImageResourceId);
+                    ImageView imageView = new ImageView(activity);
+                    imageView.setImageBitmap(bitmap);
+                    tipView = imageView;
+                }
+                if (data.onClickListener != null) {
+                    tipView.setOnClickListener(data.onClickListener);
+                }
+                layout.addView(tipView, layoutParams);
                 continue;
             }
 
             //循环需要提示的view
-            View[] views = data.views;
+            View[] views = data.targetViews;
             int[] location = new int[2];
             Rect rect = null;
             for (View view : views) {
@@ -284,6 +305,7 @@ public class GuideHelper {
                     ImageView imageView = new ImageView(activity);
                     imageView.setScaleType(ScaleType.CENTER_INSIDE);
                     imageView.setImageBitmap(bitmap);
+                    imageView.setId(imageViewId);
 
                     //如果使用者还配置了提示view的背景颜色，那么也设置显示
                     if (data.viewBg != null) {
@@ -293,16 +315,14 @@ public class GuideHelper {
                             imageView.setBackgroundDrawable(data.viewBg);
                         }
                     }
-                    // imageView.setBackgroundColor(Color.GRAY);
 
                     if (data.onClickListener != null)
                         imageView.setOnClickListener(data.onClickListener);
 
 
-                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                     params.leftMargin = location[0];
                     params.topMargin = location[1];
-                    params.gravity = Gravity.LEFT | Gravity.TOP;
                     layout.addView(imageView, params);
                 }
 
@@ -326,73 +346,70 @@ public class GuideHelper {
             if (rect == null) {
                 continue;
             }
-
-            Bitmap bitmap = BitmapFactory.decodeResource(resources, data.resourceId);
-
-            ImageView tip = new ImageView(activity);
-            // tip.setScaleType(ScaleType.CENTER_INSIDE);
-            tip.setImageBitmap(bitmap);
-
-            int imageH = bitmap.getHeight();
-            int imageW = bitmap.getWidth();
-
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            int x = 0;
+            int showViewHeight = 0;
+            int showViewWidth = 0;
+            View tipView;
+            if (data.tipView != null) {
+                tipView = data.tipView;
+                tipView.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                showViewWidth = tipView.getMeasuredWidth();
+                showViewHeight = tipView.getMeasuredHeight();
+            } else {
+                Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), data.tipImageResourceId);
+                showViewHeight = bitmap.getHeight();
+                showViewWidth = bitmap.getWidth();
+                ImageView tip = new ImageView(activity);
+                tip.setImageBitmap(bitmap);
+                tipView = tip;
+            }
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             switch (data.gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
                 case Gravity.CENTER_HORIZONTAL:
-                    x = (rect.left + rect.right) / 2 - imageW / 2;
+                    layoutParams.rightMargin = rect.width() / 2 - showViewWidth / 2;
+                    layoutParams.addRule(RelativeLayout.ALIGN_RIGHT, imageViewId);
                     break;
                 case Gravity.RIGHT:
-                    x = rect.right;
+                    layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewId);
                     break;
                 case Gravity.LEFT:
                 default:
-                    x = rect.left - imageW;
+                    layoutParams.rightMargin += rect.width();
+                    layoutParams.addRule(RelativeLayout.ALIGN_RIGHT, imageViewId);
+                    break;
             }
             int y = 0;
             switch (data.gravity & Gravity.VERTICAL_GRAVITY_MASK) {
                 case Gravity.CENTER_VERTICAL:
-                    y = (rect.top + rect.bottom) / 2 - imageH / 2;
-                    break;
-                case Gravity.BOTTOM:
-                    y = rect.bottom;
+                    layoutParams.rightMargin = rect.height() / 2 - showViewHeight / 2;
+                    layoutParams.addRule(RelativeLayout.ALIGN_TOP, imageViewId);
                     break;
                 case Gravity.TOP:
+                    layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, imageViewId);
+                    break;
+                case Gravity.BOTTOM:
                 default:
-                    y = rect.top - imageH;
+                    layoutParams.topMargin = rect.height();
+                    layoutParams.addRule(RelativeLayout.ALIGN_TOP, imageViewId);
+                    break;
             }
-
-            DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
-
-            x += data.offsetX;
-            y += data.offsetY;
-
-            if (x < 0) {
-                x = 0;
-            } else if (x + imageW > displayMetrics.widthPixels) {
-                x = displayMetrics.widthPixels - imageW;
-            }
-            if (y < 0) {
-                y = 0;
-            } else if (y + imageH > displayMetrics.heightPixels) {
-                y = displayMetrics.heightPixels - imageH;
-            }
-
-            params.leftMargin = x;
-            params.topMargin = y;
-            params.gravity = Gravity.LEFT | Gravity.TOP;
-            layout.addView(tip, params);
+            layoutParams.leftMargin += data.offsetX;
+            layoutParams.leftMargin -= data.offsetX;
+            layoutParams.topMargin += data.offsetY;
+            layoutParams.bottomMargin -= data.offsetY;
+            layout.addView(tipView, layoutParams);
         }
 
         layout.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (pages.isEmpty()&&isAutoDismiss) {
-                    dismiss();
-                } else {
-                    handler.removeCallbacksAndMessages(null);
-                    handler.sendEmptyMessage(1);
+                if (currentPage != null && currentPage.clickDoNext) {
+                    if (pages.isEmpty()) {
+                        dismiss();
+                    } else {
+                        handler.removeCallbacksAndMessages(null);
+                        handler.sendEmptyMessage(1);
+                    }
                 }
             }
         });
@@ -405,8 +422,7 @@ public class GuideHelper {
     }
 
     public static class TipData {
-        View[] views;
-        int resourceId;
+        View[] targetViews;
         int gravity = DEFAULT_GRAVITY;
         boolean needDrawView = true;
         private static final int DEFAULT_GRAVITY = Gravity.BOTTOM | Gravity.CENTER;
@@ -417,40 +433,34 @@ public class GuideHelper {
         private Drawable viewBg;
 
 
+        private int tipImageResourceId;
         /**
          * 自定义view
+         *
          * @author Yale
          * create at 2016/7/14 16:17
          */
-        View customView;
+        private View tipView;
 
-        /**
-         * 自定义view margin
-         * @author Yale
-         * create at 2016/7/14 16:17
-         */
-        Rect marginRect;
+        public TipData(View tipView, View... targetViews) {
+            this(tipView, DEFAULT_GRAVITY, targetViews);
+        }
 
-        /**
-         * 自定义view 初始化
-         * @author Yale
-         * create at 2016/7/14 16:17
-         */
-        public TipData(int gravity,Rect marginRect,View customView){
+        public TipData(View tipView, int gravity, View... targetViews) {
             this.gravity = gravity;
-            this.customView =customView;
-            this.marginRect = marginRect;
+            this.tipView = tipView;
+            this.targetViews = targetViews;
         }
 
-        public TipData(int resourceId, View... views) {
-            this(resourceId, DEFAULT_GRAVITY, views);
+        public TipData(int tipImageResourceId, View... targetViews) {
+            this(tipImageResourceId, DEFAULT_GRAVITY, targetViews);
         }
 
-        public TipData(int resourceId, int gravity, View... views) {
+        public TipData(int tipImageResourceId, int gravity, View... targetViews) {
             super();
-            this.views = views;
+            this.targetViews = targetViews;
             this.gravity = gravity;
-            this.resourceId = resourceId;
+            this.tipImageResourceId = tipImageResourceId;
         }
 
         public TipData setLocation(int gravity) {
@@ -484,6 +494,16 @@ public class GuideHelper {
         public TipData setOnClickListener(OnClickListener onClickListener) {
             this.onClickListener = onClickListener;
             return this;
+        }
+    }
+
+    private class TipPage {
+        private boolean clickDoNext = true;
+        private TipData[] tipDatas;
+
+        public TipPage(boolean clickDoNext, TipData[] tipDatas) {
+            this.clickDoNext = clickDoNext;
+            this.tipDatas = tipDatas;
         }
     }
 

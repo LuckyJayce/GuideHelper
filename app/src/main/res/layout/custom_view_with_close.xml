@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    >
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:text="自定义view"/>
+        android:text="自定义view"
+        android:textColor="#fff" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/ic_launcher" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
-
-        android:text="提示文字"/>
+        android:layout_marginTop="20dp"
+        android:text="功能展示完毕"
+        android:textColor="#fff" />
 
 
     <Button
         android:id="@+id/guide_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
         android:layout_marginTop="50dp"
-        android:text="我知道了"/>
+        android:text="我知道了"
+        android:textColor="#fff" />
 
 
 </LinearLayout>
