@@ -27,7 +27,7 @@ public class InnerChildRelativeLayout extends RelativeLayout {
         super.onLayout(changed, l, t, r, b);
         final int count = getChildCount();
         int maxW = getMeasuredWidth();
-        int maxH = getMeasuredWidth();
+        int maxH = getMeasuredHeight();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             if (child.getVisibility() != GONE) {
