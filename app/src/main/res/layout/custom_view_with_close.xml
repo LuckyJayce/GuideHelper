@@ -24,8 +24,10 @@
         android:textColor="#fff" />
 
 
-    <Button
+    <ImageButton
+        android:src="@drawable/finish"
         android:id="@+id/guide_close"
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

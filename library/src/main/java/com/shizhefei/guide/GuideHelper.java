@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -66,7 +65,11 @@ public class GuideHelper {
      * @return
      */
     public GuideHelper addPage(boolean clickDoNext, TipData... tipDatas) {
-        pages.add(new TipPage(clickDoNext, tipDatas));
+        return addPage(clickDoNext, null, tipDatas);
+    }
+
+    public GuideHelper addPage(boolean clickDoNext, OnClickListener onClickPageListener, TipData... tipDatas) {
+        pages.add(new TipPage(clickDoNext, onClickPageListener, tipDatas));
         return this;
     }
 
@@ -147,7 +150,7 @@ public class GuideHelper {
         View view = null;
         for (TipPage tipPage : pages) {
             for (TipData tp : tipPage.tipDatas) {
-                if (tp.targetViews != null&&tp.targetViews.length>0) {
+                if (tp.targetViews != null && tp.targetViews.length > 0) {
                     view = tp.targetViews[0];
                     break;
                 }
@@ -201,7 +204,6 @@ public class GuideHelper {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showIm(final RelativeLayout layout, TipData... tipDatas) {
-        Resources resources = layout.getResources();
         //移除掉之前所有的viwe
         layout.removeAllViews();
         //获取layout在屏幕上的位置
@@ -250,6 +252,10 @@ public class GuideHelper {
                 if (data.onClickListener != null) {
                     tipView.setOnClickListener(data.onClickListener);
                 }
+                layoutParams.leftMargin += data.offsetX;
+                layoutParams.rightMargin -= data.offsetX;
+                layoutParams.topMargin += data.offsetY;
+                layoutParams.bottomMargin -= data.offsetY;
                 layout.addView(tipView, layoutParams);
                 continue;
             }
@@ -386,7 +392,7 @@ public class GuideHelper {
                     layoutParams.addRule(RelativeLayout.ALIGN_TOP, imageViewId);
                     break;
                 case Gravity.TOP:
-                    layoutParams.bottomMargin =  rect.height();
+                    layoutParams.bottomMargin = rect.height();
                     layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, imageViewId);
                     break;
                 case Gravity.BOTTOM:
@@ -414,8 +420,20 @@ public class GuideHelper {
                         handler.sendEmptyMessage(1);
                     }
                 }
+                if (currentPage != null && currentPage.onClickPageListener != null) {
+                    currentPage.onClickPageListener.onClick(v);
+                }
             }
         });
+    }
+
+    public void nextPage() {
+        if (pages.isEmpty()) {
+            dismiss();
+        } else {
+            handler.removeCallbacksAndMessages(null);
+            handler.sendEmptyMessage(1);
+        }
     }
 
     public void dismiss() {
@@ -503,10 +521,12 @@ public class GuideHelper {
     private class TipPage {
         private boolean clickDoNext = true;
         private TipData[] tipDatas;
+        private OnClickListener onClickPageListener;
 
-        public TipPage(boolean clickDoNext, TipData[] tipDatas) {
+        public TipPage(boolean clickDoNext, OnClickListener onClickPageListener, TipData[] tipDatas) {
             this.clickDoNext = clickDoNext;
             this.tipDatas = tipDatas;
+            this.onClickPageListener = onClickPageListener;
         }
     }
 

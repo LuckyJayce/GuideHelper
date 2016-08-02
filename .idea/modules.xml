@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GuideHelper08.iml" filepath="$PROJECT_DIR$/GuideHelper08.iml" />
       <module fileurl="file://$PROJECT_DIR$/GuideHelper2.iml" filepath="$PROJECT_DIR$/GuideHelper2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />

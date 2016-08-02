@@ -51,7 +51,15 @@ public class MainActivity extends AppCompatActivity {
             guideHelper.addPage(tipData2);
 
             TipData tipData3 = new TipData(R.drawable.tip3, infoLayout);
-            guideHelper.addPage(tipData3);
+            TipData tipData4 = new TipData(R.drawable.next, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+            tipData4.setLocation(0, -DisplayUtils.dipToPix(v.getContext(), 100));
+            tipData4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    guideHelper.nextPage();
+                }
+            });
+            guideHelper.addPage(false, tipData3, tipData4);
 
             guideHelper.addPage(tipData1, tipData2, tipData3);
 
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     guideHelper.dismiss();
                 }
             });
-            TipData tipDataCustom = new TipData(testView);
+            TipData tipDataCustom = new TipData(testView, Gravity.CENTER);
             guideHelper.addPage(false, tipDataCustom);
 
             guideHelper.show(false);
