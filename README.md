@@ -39,6 +39,28 @@
 #效果如下：  
 ![image](https://github.com/LuckyJayce/GuideHelper/blob/master/raw/g1.gif)  
 
+##主力类库##
+
+**1.https://github.com/LuckyJayce/ViewPagerIndicator**  
+Indicator 取代 tabhost，实现网易顶部tab，新浪微博主页底部tab，引导页，无限轮播banner等效果，高度自定义tab和特效
+
+**2.https://github.com/LuckyJayce/MVCHelper**  
+实现下拉刷新，滚动底部自动加载更多，分页加载，自动切换显示网络失败布局，暂无数据布局，支持任意view，支持切换主流下拉刷新框架。
+
+**3.https://github.com/LuckyJayce/MultiTypeView**  
+简化RecyclerView的多种type的adapter，Fragment可以动态添加到RecyclerView上，实现复杂的界面分多个模块开发
+
+**4.https://github.com/LuckyJayce/EventBus**  
+事件总线，通过动态代理接口的形式发布,接收事件。定义一个接口把事件发给注册并实现接口的类
+
+**5.https://github.com/LuckyJayce/LargeImage**  
+大图加载，可供学习
+
+**6.https://github.com/LuckyJayce/GuideHelper**   
+新手引导页，轻松的实现对应的view上面的显示提示信息和展示功能给用户  
+
+有了这些类库，让你6的飞起
+
 # 联系方式和问题建议
 
 * 微博:http://weibo.com/u/3181073384
